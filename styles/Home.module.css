@@ -14,8 +14,9 @@
     margin-bottom: 27px;
 }
 .headerTopLeft{}
+
 .headerTopRight{
-    color: #fb9400;
+    color: #000;
 }
 .headerTitle{
     font-weight: 500;
@@ -31,3 +32,10 @@
     color: rgba(151, 151, 151, 0.8);
 }
 .headetButton{}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 0px 24px 0px 24px;
+}
