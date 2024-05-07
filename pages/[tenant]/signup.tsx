@@ -2,7 +2,7 @@ import { useApi } from "@/libs/useApi";
 import { Tenant } from "@/types/Tenant";
 import { useAppContext } from "@/contexts/AppContext";
 import { Header } from "@/components/Header";
-import styles from '@/styles/Login.module.css'
+import styles from '@/styles/Signup.module.css'
 
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 
 
-export default function Login(data: Props) {
+export default function SignUp(data: Props) {
     const { tenant, setTenant } = useAppContext()
     useEffect(() => {
         setTenant(data.tenant)
@@ -31,12 +31,13 @@ export default function Login(data: Props) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
 
     return (
         <div className={styles.container}>
 
             <Header
-                backHref={`/${data.tenant.slug}`}
+                backHref={`/${data.tenant.slug}/login`}
                 color={data.tenant.mainColor}
             />
 
@@ -46,10 +47,20 @@ export default function Login(data: Props) {
                 className={styles.subtitle}
                 style={{ borderBottomColor: data.tenant.mainColor }}
             >
-                Use suas credenciais para realizar o login.</div>
-            <div className={styles.line}></div>
+                Preencha os campos para criar o seu cadastro.</div>
+            <div className={styles.line}>
+
+            </div>
 
             <div className={styles.formArea}>
+                <div className={styles.inputArea}>
+                    <InputField
+                        color={data.tenant.mainColor}
+                        placeholder="Digite seu nome"
+                        value={name}
+                        onChange={setName}
+                    />
+                </div>
 
                 <div className={styles.inputArea}>
                     <InputField
@@ -71,7 +82,7 @@ export default function Login(data: Props) {
                 <div className={styles.inputArea}>
                     <Button
                         color={data.tenant.mainColor}
-                        label='Entrar'
+                        label='Cadastrar'
                         onClick={handleSubmit}
                         fill={true}
                     />
@@ -81,19 +92,8 @@ export default function Login(data: Props) {
 
             <div
                 className={styles.forgetArea}
-                style={{ borderBottomColor: data.tenant.mainColor }}
-            >
-                Esqueceu sua senha?
-                <Link href={`/${data.tenant.slug}/forget`}>Clique aqui.</Link>
-            </div>
-            <div className={styles.line}></div>
-
-            <div className={styles.signupArea}>
-                <Button
-                    color={data.tenant.mainColor}
-                    label='Quero me cadastrar'
-                    onClick={handleSignUp}
-                />
+            >Já tem cadastro?
+                <Link href={`/${data.tenant.slug}/login`}>Fazer Login.</Link>
             </div>
         </div >
     )
