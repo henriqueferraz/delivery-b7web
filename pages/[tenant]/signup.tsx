@@ -10,6 +10,7 @@ import { InputField } from "@/components/InputField";
 import { Button } from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 
 
@@ -35,6 +36,9 @@ export default function SignUp(data: Props) {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>{data.tenant.name} | Cadastro</title>
+            </Head>
 
             <Header
                 backHref={`/${data.tenant.slug}/login`}
@@ -107,9 +111,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { tenant: tenantSlug } = context.query
 
-    const api = useApi()
+    const api = useApi(tenantSlug as string)
     //GET Tenant
-    const tenant = await api.getTenant(tenantSlug as string)
+    const tenant = await api.getTenant()
     if (!tenant) {
         return {
             redirect: {

@@ -10,14 +10,20 @@ import styles from "@/styles/Home.module.css";
 
 import { Menu } from "lucide-react";
 import { GetServerSideProps } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Product } from "@/types/Product";
+import Head from "next/head";
 
 
 export default function Home(data: Props) {
+
+    //Hucks
     const { tenant, setTenant } = useAppContext()
     useEffect(() => {
         setTenant(data.tenant)
     }, [])
+
+    const [products, setProducts] = useState<Product[]>(data.products)
 
 
     const handleSearch = (searchValue: string) => {
@@ -26,6 +32,9 @@ export default function Home(data: Props) {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>{data.tenant.name} | Principal</title>
+            </Head>
             <header className={styles.header}>
                 <div className={styles.headerTop}>
                     <div className={styles.headerTopLeft}>
@@ -50,51 +59,15 @@ export default function Home(data: Props) {
             <div>
                 <Banner />
                 <div className={styles.grid}>
-                    <ProductItem
-                        data={{
-                            id: 1,
-                            image: '/burger.png',
-                            categoryName: 'Tradicional',
-                            name: 'Texas Burger',
-                            price: 'R$25,50'
-                        }}
-                    />
-                    <ProductItem
-                        data={{
-                            id: 1,
-                            image: '/burger.png',
-                            categoryName: 'Tradicional',
-                            name: 'Texas Burger',
-                            price: 'R$25,50'
-                        }}
-                    />
-                    <ProductItem
-                        data={{
-                            id: 1,
-                            image: '/burger.png',
-                            categoryName: 'Tradicional',
-                            name: 'Texas Burger',
-                            price: 'R$25,50'
-                        }}
-                    />
-                    <ProductItem
-                        data={{
-                            id: 1,
-                            image: '/burger.png',
-                            categoryName: 'Tradicional',
-                            name: 'Texas Burger',
-                            price: 'R$25,50'
-                        }}
-                    />
-                    <ProductItem
-                        data={{
-                            id: 1,
-                            image: '/burger.png',
-                            categoryName: 'Tradicional',
-                            name: 'Texas Burger',
-                            price: 'R$25,50'
-                        }}
-                    />
+
+                    {products.map((item, index) => (
+                        <ProductItem
+                            key={index}
+                            data={item}
+                        />
+                    ))}
+
+
                 </div>
             </div>
         </div>
@@ -102,16 +75,18 @@ export default function Home(data: Props) {
 }
 
 type Props = {
-    tenant: Tenant
+    tenant: Tenant,
+    products: Product[]
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { tenant: tenantSlug } = context.query
 
-    const api = useApi()
+    const api = useApi(tenantSlug as string)
+
     //GET Tenant
-    const tenant = await api.getTenant(tenantSlug as string)
+    const tenant = await api.getTenant()
     if (!tenant) {
         return {
             redirect: {
@@ -121,9 +96,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
+    //GET Products
+    const products = await api.getAllProducts()
+
     return {
         props: {
-            tenant
+            tenant,
+            products
         }
     }
 }

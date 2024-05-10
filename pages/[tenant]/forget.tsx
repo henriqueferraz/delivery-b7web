@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { InputField } from "@/components/InputField";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 
 
@@ -28,7 +29,9 @@ export default function Forget(data: Props) {
 
     return (
         <div className={styles.container}>
-
+            <Head>
+                <title>{data.tenant.name} | Recuperar Senha</title>
+            </Head>
             <Header
                 backHref={`/${data.tenant.slug}/login`}
                 color={data.tenant.mainColor}
@@ -76,9 +79,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { tenant: tenantSlug } = context.query
 
-    const api = useApi()
+    const api = useApi(tenantSlug as string)
     //GET Tenant
-    const tenant = await api.getTenant(tenantSlug as string)
+    const tenant = await api.getTenant()
     if (!tenant) {
         return {
             redirect: {
