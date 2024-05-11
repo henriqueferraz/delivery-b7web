@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 import { useEffect } from "react";
 import { Product } from "@/types/Product";
 import Head from "next/head";
+import { Header } from "@/components/Header";
 
 
 export default function Products(data: Props) {
@@ -22,6 +23,13 @@ export default function Products(data: Props) {
             <Head>
                 <title>{data.tenant.name} | {data.product.name}</title>
             </Head>
+            <div className={styles.headerArea}>
+                <Header
+                    color={data.tenant.mainColor}
+                    backHref={`/${data.tenant.slug}`}
+                    title={data.product.name}
+                />
+            </div>
         </div>
     )
 }
