@@ -3,7 +3,7 @@ import { Product } from "@/types/Product";
 
 const TemporaryOneProduct: Product = {
     id: 1,
-    image: '/hamb-2.png',
+    image: '/burger.png',
     categoryName: 'Tradicional',
     name: 'Golden Burger',
     price: 25.50,

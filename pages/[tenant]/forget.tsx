@@ -1,6 +1,6 @@
 import { useApi } from "@/libs/useApi";
 import { Tenant } from "@/types/Tenant";
-import { useAppContext } from "@/contexts/AppContext";
+import { useAppContext } from "@/contexts/app";
 import { Header } from "@/components/Header";
 import styles from '@/styles/Forget.module.css'
 

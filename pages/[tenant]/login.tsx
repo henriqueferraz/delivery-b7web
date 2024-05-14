@@ -1,6 +1,6 @@
 import { useApi } from "@/libs/useApi";
 import { Tenant } from "@/types/Tenant";
-import { useAppContext } from "@/contexts/AppContext";
+import { useAppContext } from "@/contexts/app";
 import { Header } from "@/components/Header";
 import styles from '@/styles/Login.module.css'
 
@@ -11,8 +11,6 @@ import { Button } from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
-
-
 
 export default function Login(data: Props) {
     const { tenant, setTenant } = useAppContext()
@@ -35,7 +33,7 @@ export default function Login(data: Props) {
 
     return (
         <div className={styles.container}>
-            <Head>
+            <Head  >
                 <title>{data.tenant.name} | Login</title>
             </Head>
 
