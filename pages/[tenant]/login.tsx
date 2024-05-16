@@ -11,8 +11,10 @@ import { Button } from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useAuthContext } from "@/contexts/auth";
 
 export default function Login(data: Props) {
+    const { setToken, setUser } = useAuthContext()
     const { tenant, setTenant } = useAppContext()
     useEffect(() => {
         setTenant(data.tenant)
@@ -21,7 +23,12 @@ export default function Login(data: Props) {
     const router = useRouter()
 
     const handleSubmit = () => {
-
+        setToken('1234')
+        setUser({
+            name: 'Maria',
+            email: 'ofnet@ofnet.com.br'
+        })
+        router.push(`/${data.tenant.slug}`)
     }
 
     const handleSignUp = () => {

@@ -1,20 +1,16 @@
 .container{
     background-color: #fff;
 }
-
 .header{
     background-color: #f9f9fb;
     padding: 50px 24px 30px 24px;
 }
-
 .headerTop{
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 27px;
 }
-.headerTopLeft{}
-
 .headerTopRight{
     color: #000;
 }
@@ -31,11 +27,30 @@
     font-size: 16px;
     color: rgba(151, 151, 151, 0.8);
 }
-.headetButton{}
-
 .grid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     margin: 0px 24px 0px 24px;
+}
+.searchText{
+    font-weight: 400;
+    font-size: 16px;
+    color: #979797;
+    margin: 24px;
+}
+.searchText strong{
+    font-weight: 600;
+}
+.noProdutcs{
+    width: 235px;
+    margin: 88px auto;
+}
+.noProdutcsText{
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #cdcdcd;
+    text-align: center;
+    margin-top: 32px;
 }

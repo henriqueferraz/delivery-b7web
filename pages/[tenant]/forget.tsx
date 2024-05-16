@@ -36,18 +36,14 @@ export default function Forget(data: Props) {
                 backHref={`/${data.tenant.slug}/login`}
                 color={data.tenant.mainColor}
             />
-
             <div className={styles.header}>{data.tenant.name}</div>
-
             <div className={styles.title}>Esqueceu sua senha?</div>
-
             <div
                 className={styles.subtitle}
                 style={{ borderBottomColor: data.tenant.mainColor }}
             >
                 Preencha o campo com seu e-mail e receba as intruções necessárias para redefinir sua senha.</div>
             <div className={styles.line}></div>
-
             <div className={styles.formArea}>
 
                 <div className={styles.inputArea}>

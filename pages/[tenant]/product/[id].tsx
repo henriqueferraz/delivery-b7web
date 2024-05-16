@@ -12,6 +12,9 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/Button";
 import { useFormatter } from "@/libs/useFormatter";
 import { Quantity } from "@/components/Quantity";
+import { CartCookies } from "@/types/CartCookies";
+import { getCookie, hasCookie, setCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 
 export default function Products(data: Props) {
@@ -22,13 +25,45 @@ export default function Products(data: Props) {
         setTenant(data.tenant)
     }, [])
 
+    const router = useRouter()
+    const formatter = useFormatter()
+
     const [qtCount, setQtCount] = useState(1)
 
-    const handleAddToCart = () => { }
     const handleUpdateQt = (newCount: number) => {
         setQtCount(newCount)
     }
-    const formatter = useFormatter()
+
+    //Cookies
+    const handleAddToCart = () => {
+        let cart: CartCookies[] = []
+
+        //cria ou procura por um carrinho existente
+        if (hasCookie('cart')) {
+            const cartCookie = getCookie('cart')
+            const cartJson: CartCookies[] = JSON.parse(cartCookie as string)
+            for (let i in cartJson) {
+                if (cartJson[i].qt && cartJson[i].id) {
+                    cart.push(cartJson[i])
+                }
+            }
+        }
+
+        //procura por produto no carrinho
+        const cartIndex = cart.findIndex(item => item.id === data.product.id)
+        if (cartIndex > -1) {
+            cart[cartIndex].qt += qtCount
+        } else {
+            cart.push({ id: data.product.id, qt: qtCount })
+        }
+
+
+        //Setting cookie
+        setCookie('cart', JSON.stringify(cart))
+
+        //envia para o carrinho
+        router.push(`/${data.tenant.slug}/cart`)
+    }
 
     return (
         <div className={styles.container}>
@@ -103,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     //GET Products
-    const product = await api.getProduct(id as string)
+    const product = await api.getProduct(parseInt(id as string))
 
     return {
         props: {

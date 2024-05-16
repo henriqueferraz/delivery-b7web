@@ -1,5 +1,6 @@
 import { Tenant } from "@/types/Tenant";
 import { Product } from "@/types/Product";
+import { User } from "@/types/User";
 
 const TemporaryOneProduct: Product = {
     id: 1,
@@ -18,8 +19,8 @@ export const useApi = (tenantSlug: string) => ({
                 return {
                     slug: 'b7burger',
                     name: 'B7Burger',
-                    mainColor: '#ff0000',
-                    secondColor: '#FB9400'
+                    mainColor: '#fb9400',
+                    secondColor: '#fff9f2'
                 }
 
                 break;
@@ -27,8 +28,8 @@ export const useApi = (tenantSlug: string) => ({
                 return {
                     slug: 'b7pizza',
                     name: 'B7Pizza',
-                    mainColor: '#0000ff',
-                    secondColor: '#ff0000'
+                    mainColor: '#6ab70a',
+                    secondColor: 'currentColor'
                 }
 
                 break;
@@ -38,13 +39,27 @@ export const useApi = (tenantSlug: string) => ({
 
     getAllProducts: async () => {
         let products = []
-        for (let q = 0; q < 10; q++) {
-            products.push(TemporaryOneProduct)
+        for (let q = 0; q < 6; q++) {
+            products.push({
+                ...TemporaryOneProduct,
+                id: q + 1
+            })
         }
         return products
     },
 
-    getProduct: async (id: string) => {
-        return TemporaryOneProduct
+    getProduct: async (id: number) => {
+        return {
+            ...TemporaryOneProduct,
+            id
+        }
+    },
+    autorizeToken: async (token: string): Promise<User | false> => {
+        if (!token) return false
+
+        return {
+            name: 'Maria',
+            email: 'ofnet@ofnet.com.br'
+        }
     }
 })

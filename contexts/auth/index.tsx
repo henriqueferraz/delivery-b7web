@@ -15,7 +15,6 @@ export const AppContext = createContext<ContextType>({
 })
 
 export const Provider = ({ children }: ProviderType) => {
-
     const [state, dispatch] = useReducer(reducer, initialState)
     const value = { state, dispatch }
 
