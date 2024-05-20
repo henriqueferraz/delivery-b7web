@@ -13,5 +13,8 @@ export const useFormatter = () => ({
         } else {
             return qt
         }
+    },
+    formatDate: (date: string) => {
+        return new Intl.DateTimeFormat('pt-BR').format(new Date(`${date} 00:00:00`))
     }
 })

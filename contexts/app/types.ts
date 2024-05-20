@@ -1,8 +1,11 @@
+import { Address } from "@/types/Address"
 import { Tenant } from "@/types/Tenant"
 import { Dispatch, ReactNode } from "react"
 
 export type DataType = {
     tenant: Tenant | null
+    shippingAddress: Address | null
+    shippingPrice: number
 }
 
 export type ActionType = {
@@ -17,6 +20,8 @@ export type ProviderType = {
     children: ReactNode
 }
 export enum Actions {
-    SET_TENANT
+    SET_TENANT,
+    SET_SHIPPING_ADDRESS,
+    SET_SHIPPING_PRICE
 }
 
